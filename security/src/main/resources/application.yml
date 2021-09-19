@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: security-service
+  datasource:
+    password:
+    url: jdbc:postgresql://localhost:5432/micro
+    username: postgres
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+  mail:
+    host: smtp.gmail.com
+    password: rkruzyzziwprwcho
+    username: restaurantix20@gmail.com
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+swagger:
+  title: security-service
+  description: nuevo
+  version: @project.version@
+  host: localhost
+host:
+  images: http://loclahost:3000/uploads/images/
+jwt:
+  secret: dsfsdfdsfsdf
+logging:
+  level:
+    org:
+      hibernate:
+        sql: info
+        type: info
+
