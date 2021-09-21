@@ -5,7 +5,7 @@ import micro.mike.commons.db.entities.ProductEntity;
 import micro.mike.commons.db.entities.UserEntity;
 import micro.mike.products.api.products.dto.CreateProductDto;
 import micro.mike.products.api.products.dto.UpdateProductDto;
-import micro.mike.products.http.UsersFeignHttp;
+import micro.mike.products.feign.UsersHttp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class ProductService extends HibernateServiceImpl<ProductEntity, CreatePr
     private final Logger logger = LoggerFactory.getLogger(ProductController.class);
 
     @Autowired
-    private UsersFeignHttp usersFeign;
+    private UsersHttp usersFeign;
 
     public ProductService(@Autowired ProductRepository repository) {
         super(repository);
