@@ -1,7 +1,9 @@
-package micro.mike.commons.http.exceptions;
+package micro.mike.products.interceptors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.log4j.Log4j2;
+import micro.mike.commons.http.exceptions.HttpException;
+import micro.mike.commons.http.exceptions.HttpRequestException;
+import org.slf4j.MDC;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,14 +16,14 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 @ControllerAdvice
+@Log4j2
 public class HttpRequestExceptionHandler {
-    private static final Logger logger = LoggerFactory.getLogger(HttpRequestExceptionHandler.class);
 
     @ExceptionHandler(value = {HttpRequestException.class})
     public ResponseEntity<HttpException> handlerError(HttpServletRequest request, HttpRequestException e) {
         HttpException z = new HttpException(e.getMessage(), e.getStatus().value(), ZonedDateTime.now(ZoneId.of("Z")));
         printError(request, z);
-        return new ResponseEntity<HttpException>(z, e.getStatus());
+        return new ResponseEntity<>(z, e.getStatus());
     }
 
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
@@ -37,13 +39,10 @@ public class HttpRequestExceptionHandler {
     }
 
     private void printError(HttpServletRequest request, HttpException e) {
-        long time = System.currentTimeMillis() - ((long) request.getAttribute("time"));
-        String uuid = (String) request.getAttribute("uuid");
-        String log = "[ERROR|".concat(uuid).concat("][").concat(request.getMethod()).concat("|").concat(request.getServletPath()).concat("]");
-        log = log.concat("[MESSAGE|").concat(e.getMessage()).concat("][");
-        log = log.concat("[CODE|").concat(String.valueOf(e.getCode())).concat("][");
-        log = log.concat("[TIMESTAMP|").concat(String.valueOf(e.getTimestamp())).concat("][");
-        log = log.concat("[TIME|").concat(String.valueOf(time)).concat("ms]");
-        logger.info(log);
+        MDC.put("path", request.getServletPath());
+        String logString = "[MESSAGE|".concat(e.getMessage()).concat("][");
+        logString = logString.concat("[CODE|").concat(String.valueOf(e.getCode())).concat("][");
+        logString = logString.concat("[TIMESTAMP|").concat(String.valueOf(e.getTimestamp())).concat("]");
+        log.error(logString);
     }
 }

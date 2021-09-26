@@ -1,6 +1,9 @@
 package micro.mike.commons.db.entities;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ResultCheckStyle;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -13,12 +16,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Builder
+@Data
 @Table(name = "products")
 @SQLDelete(sql = "UPDATE products SET deleted_at = NOW() WHERE id = ?", check = ResultCheckStyle.COUNT)
 @Where(clause = "deleted_at is null")
@@ -26,17 +28,17 @@ public class ProductEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, columnDefinition = "bigint")
+    @Column(name = "id", columnDefinition = "bigint")
     private Long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "photo", nullable = false)
+    @Column(name = "photo")
     private String photo;
 
 
-    @Column(name = "active", nullable = false)
+    @Column(name = "active")
     private Boolean active = true;
 
     @Column(name = "created_at")

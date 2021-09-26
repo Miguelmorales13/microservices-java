@@ -28,7 +28,7 @@ swagger:
 api:
   users:
     name: services-security
-    url: localhost:8001
+    url: http://localhost:8001
     path: /users
 host:
   images: http://localhost:3000/uploads/images/
@@ -45,6 +45,7 @@ logging:
       hibernate:
         sql: DEBUG
         type: DEBUG
+
 eureka:
   client:
     service-url:

@@ -4,7 +4,7 @@ import micro.mike.commons.db.entities.UserEntity;
 import micro.mike.commons.http.interceptors.annotations.ResponseSuccess;
 import micro.mike.security.api.users.dto.CreateUserDto;
 import micro.mike.security.api.users.dto.UpdateUserDto;
-import micro.mike.security.aspects.TrackTime;
+import micro.mike.security.api.users.http.CrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +19,11 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    CrudService<Object> crudService;
+
     @GetMapping()
-    @TrackTime()
+//    @TrackTime()
     @ResponseSuccess(message = "getter successful")
     public List<UserEntity> getAll() {
         List<UserEntity> users = userService.getAll();

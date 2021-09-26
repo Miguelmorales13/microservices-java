@@ -5,11 +5,13 @@ import micro.mike.commons.http.models.CreateUserDto;
 import micro.mike.commons.http.models.ResponseService;
 import micro.mike.commons.http.models.UpdateUserDto;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RefreshScope
+@FeignClient(name = "${api.users.name}", path = "${api.users.path}", url = "${api.users.url}")
 public interface UsersFeign {
 
     @GetMapping("")

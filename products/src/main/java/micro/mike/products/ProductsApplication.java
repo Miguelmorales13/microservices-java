@@ -7,19 +7,10 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
-@EnableFeignClients()
 @EnableEurekaClient
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
-@EntityScan({
-        "micro.mike.commons.db.entities",
-        "micro.mike.commons.db.crud",
-        "micro.mike.commons.converts",
-        "micro.mike.commons.converts",
-        "micro.mike.commons.http.exceptions",
-        "micro.mike.commons.http.feign",
-        "micro.mike.commons.http.interceptors.annotations",
-        "micro.mike.commons.http.models",
-})
+@EnableFeignClients(basePackages = "micro.mike.commons.http.feign")
+@EntityScan({"micro.mike.commons.*"})
 public class ProductsApplication {
 
     public static void main(String[] args) {

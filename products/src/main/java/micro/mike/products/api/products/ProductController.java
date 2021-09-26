@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -23,6 +24,15 @@ public class ProductController {
     public List<ProductEntity> getAll() {
 
         List<ProductEntity> products = productService.getAll();
+
+        return products;
+    }
+
+    @GetMapping(path = "/{id}")
+    @ResponseSuccess(message = "getter successful")
+    public Optional<ProductEntity> getOne(@PathVariable("id") Long id) {
+
+        Optional<ProductEntity> products = productService.getOne(id);
 
         return products;
     }
